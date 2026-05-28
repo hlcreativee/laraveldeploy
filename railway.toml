@@ -10,9 +10,14 @@ nixPkgs = [
   "php84Extensions.curl"
 ]
 
+[phases.install]
+cmds = [
+  "npm cache clean --force",
+  "npm install --legacy-peer-deps"
+]
+
 [phases.build]
 cmds = [
-  "npm install",
   "npm run build"
 ]
 
