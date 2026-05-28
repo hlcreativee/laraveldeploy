@@ -2,10 +2,19 @@
 builder = "NIXPACKS"
 
 [phases.setup]
-nixPkgs = ["nodejs_20", "php84", "php84Extensions.pdo_pgsql", "php84Extensions.mbstring"]
+nixPkgs = [
+  "nodejs_20",
+  "php84",
+  "php84Extensions.pdo_pgsql",
+  "php84Extensions.mbstring",
+  "php84Extensions.curl"
+]
 
 [phases.build]
-cmds = ["npm install", "npm run build"]
+cmds = [
+  "npm install",
+  "npm run build"
+]
 
 [start]
 cmd = "php artisan migrate --force && php artisan serve --host=0.0.0.0 --port=8080"
