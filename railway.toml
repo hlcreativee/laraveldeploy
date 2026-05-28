@@ -12,11 +12,7 @@ nixPkgs = [
 
 [phases.install]
 cmds = [
-  "node -v",
-  "npm -v",
-  "rm -rf node_modules package-lock.json",
-  "npm cache clean --force",
-  "npm install --legacy-peer-deps --no-audit --no-fund"
+  "npm install --legacy-peer-deps"
 ]
 
 [phases.build]
