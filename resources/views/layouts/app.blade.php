@@ -2,7 +2,8 @@
 <html>
 <head>
     <title>Retail Pro</title>
-    <link rel="stylesheet" href="{{ asset('css/style.css') }}">
+
+    @vite(['resources/css/app.css', 'resources/js/app.js'])
 </head>
 <body>
 
@@ -12,6 +13,5 @@
         @yield('content')
     </div>
 
-    <script src="{{ asset('js/sidebar.js') }}"></script>
 </body>
 </html>
