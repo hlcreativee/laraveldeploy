@@ -7,9 +7,9 @@ use Illuminate\Support\Facades\DB;
 
 class TransaksiController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        $data = DB::table('transaksi')
+        $query = DB::table('transaksi')
             ->select(
                 'Invoice',
                 'StockCode',
@@ -20,9 +20,24 @@ class TransaksiController extends Controller
                 'CustomerID',
                 'Country'
             )
-            ->whereNotNull('InvoiceDate')
+            ->whereNotNull('InvoiceDate');
+
+        if ($request->filled('search')) {
+            $search = $request->search;
+
+            $query->where(function ($q) use ($search) {
+                $q->where('Invoice', 'like', "%{$search}%")
+                  ->orWhere('StockCode', 'like', "%{$search}%")
+                  ->orWhere('Description', 'like', "%{$search}%")
+                  ->orWhere('Country', 'like', "%{$search}%")
+                  ->orWhere('CustomerID', 'like', "%{$search}%");
+            });
+        }
+
+        $data = $query
             ->orderBy('InvoiceDate', 'desc')
-            ->paginate(50);
+            ->paginate(50)
+            ->appends($request->all());
 
         return view('transaksi', compact('data'));
     }
@@ -40,7 +55,7 @@ class TransaksiController extends Controller
             'Country' => 'required',
         ]);
 
-       DB::table('transaksi')->insert([
+        DB::table('transaksi')->insert([
             'Invoice' => $request->Invoice,
             'StockCode' => $request->StockCode,
             'Description' => $request->Description,
