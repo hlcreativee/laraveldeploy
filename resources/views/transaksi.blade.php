@@ -12,7 +12,15 @@
             <small>Data dari Database</small>
         </div>
 
-        <input placeholder="Cari transaksi...">
+        <form method="GET" action="{{ route('transaksi.index') }}">
+            <input
+                type="text"
+                name="search"
+                value="{{ request('search') }}"
+                placeholder="Cari transaksi..."
+            >
+            <button type="submit">Cari</button>
+        </form>
     </div>
 
     <div class="filters">
